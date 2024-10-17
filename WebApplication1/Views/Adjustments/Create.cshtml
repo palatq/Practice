@@ -1,0 +1,63 @@
+﻿@model WebApplication1.Models.Adjustment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Создать Заявку</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="EquipmentId">Оборудование</label>
+        <select asp-for="EquipmentId" class="form-control" asp-items="ViewBag.Equipments"></select>
+
+    </div>
+    <!---->
+    @if (ViewBag.Equipments != null)
+    {
+        <ul>
+            @foreach (var item in ViewBag.Equipments)
+            {
+                <li>@item.NameEq</li> <!-- Проверьте, что это свойство соответствует вашей модели -->
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Нет доступного оборудования.</p>
+    } 
+    <!---->
+
+    <div class="form-group">
+        <label asp-for="TechnicianName">ФИО наладчика</label>
+        <input asp-for="TechnicianName" class="form-control" />
+        <span asp-validation-for="TechnicianName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Comments">Комментарий</label>
+        <textarea asp-for="Comments" class="form-control"></textarea>
+        <span asp-validation-for="Comments" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Status">Статус</label>
+        <select asp-for="Status" class="form-control">
+            <option value="">Выберите статус</option>
+            <option value="Создана">Создана</option>
+            <option value="В работе">В работе</option>
+            <option value="Выполнена">Выполнена</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Создать</button>
+</form>
+
+<div>
+    <a asp-controller="Equipments" asp-action="Index">Назад к списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

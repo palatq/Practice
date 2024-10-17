@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebApplication1.Models.Equipment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Оборудование</h1>
+
+<p>
+    <a asp-action="Create">Создать новое оборудование</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Название оборудования
+            </th>
+            <th>
+                Цех
+            </th>
+            <th>
+                Учетный номер
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameEq)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Workshop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcNumber)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a> |
+                    <a asp-action="Create" asp-controller="Adjustments" asp-route-equipmentId="@item.Id">Заявка</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

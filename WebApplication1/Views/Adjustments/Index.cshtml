@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WebApplication1.Models.Adjustment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameEq)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Workshop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AcNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TechnicianName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EquipmentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameEq)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Workshop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TechnicianName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-controller="Equipments" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-controller="Equipments"  asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-controller="Equipments" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

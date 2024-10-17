@@ -1,0 +1,38 @@
+﻿@model WebApplication1.Models.Equipment
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Удалить</h1>
+
+<h3>Вы уверены что хотите удалить оборудование из списка?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+           Название оборудования
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NameEq)
+        </dd>
+        <dt class = "col-sm-2">
+            Цех
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Workshop)
+        </dd>
+        <dt class = "col-sm-2">
+            Учетный номер
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AcNumber)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="Index">Вернуться к списку</a>
+    </form>
+</div>
