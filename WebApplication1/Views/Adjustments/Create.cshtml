@@ -6,27 +6,12 @@
 
 <h2>Создать Заявку</h2>
 
-<form asp-action="Create">
+<form id="createForm" asp-action="Create" method="post">
+    <!-- Указываем действие и метод -->
     <div class="form-group">
         <label asp-for="EquipmentId">Оборудование</label>
         <select asp-for="EquipmentId" class="form-control" asp-items="ViewBag.Equipments"></select>
-
     </div>
-    <!---->
-    @if (ViewBag.Equipments != null)
-    {
-        <ul>
-            @foreach (var item in ViewBag.Equipments)
-            {
-                <li>@item.NameEq</li> <!-- Проверьте, что это свойство соответствует вашей модели -->
-            }
-        </ul>
-    }
-    else
-    {
-        <p>Нет доступного оборудования.</p>
-    } 
-    <!---->
 
     <div class="form-group">
         <label asp-for="TechnicianName">ФИО наладчика</label>
@@ -55,9 +40,14 @@
 </form>
 
 <div>
-    <a asp-controller="Equipments" asp-action="Index">Назад к списку</a>
+    <a asp-controller="Adjustments" asp-action="Index">Назад к списку</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+
+
+
