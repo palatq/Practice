@@ -24,7 +24,7 @@
         {
             <tr>
                 <td>@item.Equipment.NameEq</td> <!-- Предполагается, что вы загружаете оборудование с заявкой -->
-                <td>@item.TechnicianName</td>
+                <td>@(item.Worker != null ? item.Worker.WorkerName : "Неизвестно")</td>
                 <td>@item.Comments</td>
                 <td>@item.Status</td>
                 <td>

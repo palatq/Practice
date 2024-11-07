@@ -10,6 +10,7 @@ namespace WebApplication1.Data
             : base(options)
         {
         }
+        public DbSet<Worker> Workers { get; set; }
         public DbSet<WebApplication1.Models.Equipment> Equipments { get; set; } = default!;
         public DbSet<Adjustment> Adjustments { get; set; }
         public DbSet<WebApplication1.Models.Worker> Worker { get; set; } = default!;

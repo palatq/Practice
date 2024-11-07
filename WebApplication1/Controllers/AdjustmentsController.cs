@@ -22,10 +22,18 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> Index()
         {
             var adjustments = await _context.Adjustments
-            .Include(a => a.Equipment) // Загружаем оборудование
-            .ToListAsync();
+                .Include(a => a.Worker)
+                .ToListAsync();
+
+            // Логируем данные
+            foreach (var adjustment in adjustments)
+            {
+                Console.WriteLine($"Adjustment ID: {adjustment.Id}, Worker: {adjustment.Worker?.WorkerName ?? "Неизвестно"}");
+            }
+
             return View(adjustments);
         }
+
 
         // GET: Adjustments/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -51,13 +59,17 @@ namespace WebApplication1.Controllers
 
         public async Task<IActionResult> Create()
         {
+            // Загружаем оборудование
             var equipments = await _context.Equipments.ToListAsync(); // Загружаем оборудование ViewBag.Equipments = new SelectList(equipments, "Id", "NameEq"); // Передаем список в ViewBag
             ViewBag.Equipments = new SelectList(equipments, "Id", "NameEq"); // Передаем в ViewBag для использования в выпадающем списке
+            // Загружаем наладчиков
+            var workers = await _context.Workers.ToListAsync();
+            ViewBag.Workers = new SelectList(workers, "WorkerId", "WorkerName");
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EquipmentId,TechnicianName,Comments,Status")] Adjustment adjustment)
+        public async Task<IActionResult> Create([Bind("WorkerId,EquipmentId,WorkerName,Comments,Status")] Adjustment adjustment)
         {
             if (ModelState.IsValid)
             {
@@ -77,10 +89,6 @@ namespace WebApplication1.Controllers
                     ModelState.AddModelError("", $"Ошибка при сохранении: {ex.Message}");
                 }
 
-                adjustment.Id = Guid.NewGuid(); // Генерируем новый ID
-                _context.Add(adjustment); // Добавляем заявку в контекст
-                await _context.SaveChangesAsync(); // Сохраняем изменения в базе данных
-                return RedirectToAction("Index"); // Перенаправляем на страницу Index
             }
                 var equipments = _context.Equipments.ToList(); // Получаем список оборудования из базы данных
                 ViewBag.Equipments = new SelectList(_context.Equipments, "Id", "NameEq", adjustment.EquipmentId);
@@ -103,10 +111,11 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
+            var workers = await _context.Workers.ToListAsync();
+            ViewBag.Workers = new SelectList(workers, "WorkerId", "WorkerName");
             var equipments = await _context.Equipments.ToListAsync(); // Загружаем оборудование ViewBag.Equipments = new SelectList(equipments, "Id", "NameEq"); // Передаем список в ViewBag
             ViewBag.Equipments = new SelectList(equipments, "Id", "NameEq"); // Передаем в ViewBag для использования в выпадающем списке
             return View();
-            return View(adjustment);
         }
 
         // POST: Adjustments/Edit/5

@@ -44,11 +44,12 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Workers/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var workers = await _context.Worker.ToListAsync(); // Загружаем оборудование ViewBag.Equipments = new SelectList(equipments, "Id", "NameEq"); // Передаем список в ViewBag
+            ViewBag.Workers = new SelectList(workers, "WorkerId"); // Передаем в ViewBag для использования в выпадающем списке
             return View();
         }
-
         // POST: Workers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -56,6 +57,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WorkerId,WorkerName,Surname,Patronymic")] Worker worker)
         {
+
             if (ModelState.IsValid)
             {
                 worker.WorkerId = Guid.NewGuid();
@@ -63,6 +65,7 @@ namespace WebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(worker);
         }
 

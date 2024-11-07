@@ -15,8 +15,9 @@
 
     <div class="form-group">
         <label asp-for="TechnicianName">ФИО наладчика</label>
-        <input asp-for="TechnicianName" class="form-control" />
-        <span asp-validation-for="TechnicianName" class="text-danger"></span>
+        <select asp-for="TechnicianName" class="form-control" asp-items="ViewBag.Workers"></select>
+       @*  <input asp-for="TechnicianName" class="form-control" />
+        <span asp-validation-for="TechnicianName" class="text-danger"></span> *@
     </div>
 
     <div class="form-group">
