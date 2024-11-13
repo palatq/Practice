@@ -8,11 +8,11 @@
         public required string? Workshop { get; set; }
         public string? AcNumber { get; set; }
         public required string Status { get; set; }
-        public required string TechnicianName { get; set; }
         public required string Comments { get; set; }
 
         public virtual Equipment? Equipment { get; set; }
         public virtual Worker? Worker { get; set; } // Навигационное свойство
+        public Guid? WorkerId { get; set; } // Идентификатор работника
     }
 }
 
